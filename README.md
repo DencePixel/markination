@@ -52,7 +52,6 @@ from discord import ui
 
 @bot.command()
 async def paginator(ctx: commands.Context):
-async def paginator(ctx: commands.Context):
     embeds = [discord.Embed(title="First embed"),         
             discord.Embed(title="Second embed"),
             discord.Embed(title="Third embed")]
