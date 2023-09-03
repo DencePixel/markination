@@ -29,9 +29,9 @@ pip install markination
 
 ## Usage
 
-Simple Setup:
+Simple Button Setup:
 ```python
-from markination import main
+from markination import ButtonPaginator
 from discord.ext import commands
 import discord
 
@@ -43,12 +43,12 @@ async def paginator(ctx: commands.Context):
             discord.Embed(title="Third embed")]
 
     # Start the paginator
-    await main.Simple().start(ctx, pages=embeds)
+    await ButtonPaginator.Simple().start(ctx, pages=embeds)
 ```
 
 Custom Buttons:
 ```python
-from markination import main
+from markination import ButtonPaginator
 from discord.ext import commands
 import discord
 from discord import ui
@@ -66,7 +66,7 @@ async def paginator(ctx: commands.Context):
     InitialPage = 0 # Page to start the paginator on.
     timeout = 0 # Seconds to timeout. Default is 60
     ephemeral = bool # Defaults to false if not passed in.
-    await main.Simple(
+    await ButtonPaginator.Simple(
         PreviousButton=PreviousButton,
         NextButton=NextButton,
         FirstEmbedButton=FirstPageButton,
@@ -75,5 +75,23 @@ async def paginator(ctx: commands.Context):
         InitialPage=InitialPage,
         timeout=timeout, ephemeral=ephemeral).start(ctx, pages=embeds)
 ```
+Simple Dropdown Setup
+```python
+from markination import DropdownPaginator
+from discord.ext import commands
+import discord
+from discord import ui
 
+@bot.command()
+async def dropdown(ctx):
+    pages = [
+        discord.Embed(title="Page 1", description="This is the first page."),
+        discord.Embed(title="Page 2", description="This is the second page."),
+        discord.Embed(title="Page 3", description="This is the third page.")
+    ]
+
+    dropdown = Dropdown(ctx, pages, timeout=60)
+    await DropdownPaginator.Simple().start(ctx)
+
+```
 Pull Requests are always open!
