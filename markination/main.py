@@ -24,8 +24,6 @@ class Simple(discord.ui.View):
         Overrides default page counter style.
     InitialPage: int
         Page to start the pagination on.
-    AllowExtInput: bool
-        Overrides the ability for 3rd party to interact with button.
     ephemeral: bool
         Whether to send messages with this view as ephemeral (only visible to the original author).
     """
@@ -35,9 +33,9 @@ class Simple(discord.ui.View):
                  PreviousButton: discord.ui.Button = discord.ui.Button(emoji="⏪"),
                  NextButton: discord.ui.Button = discord.ui.Button(emoji="⏩"),
                  FirstEmbedButton: discord.ui.Button = discord.ui.Button(emoji="⏮"),
-                 LastEmbedButton: discord.ui.Button = discord.ui.Button(emoji="⏯"),
+                 LastEmbedButton: discord.ui.Button = discord.ui.Button(emoji="⏭"),
                  PageCounterStyle: discord.ButtonStyle = discord.ButtonStyle.grey,
-                 InitialPage: int = 0, AllowExtInput: bool = False,
+                 InitialPage: int = 0,
                  ephemeral: bool = False) -> None:
         self.PreviousButton = PreviousButton
         self.FirstEmbedButton = FirstEmbedButton
@@ -45,7 +43,6 @@ class Simple(discord.ui.View):
         self.NextButton = NextButton
         self.PageCounterStyle = PageCounterStyle
         self.InitialPage = InitialPage
-        self.AllowExtInput = AllowExtInput
         self.ephemeral = ephemeral
 
         self.pages = None
@@ -74,12 +71,11 @@ class Simple(discord.ui.View):
         self.page_counter = SimplePaginatorPageCounter(style=self.PageCounterStyle,
                                                        TotalPages=self.total_page_count,
                                                        InitialPage=self.InitialPage)
-
+        self.add_item(self.FirstEmbedButton)
         self.add_item(self.PreviousButton)
         self.add_item(self.page_counter)
         self.add_item(self.NextButton)
-        self.add_item(self.FirstEmbedButton)  # Added the start button to the view
-        self.add_item(self.LastEmbedButton)  # Added the end button to the view
+        self.add_item(self.LastEmbedButton)
 
         self.message = await ctx.send(embed=self.pages[self.InitialPage], view=self, ephemeral=self.ephemeral)
 
@@ -102,7 +98,7 @@ class Simple(discord.ui.View):
         await self.message.edit(embed=self.pages[self.current_page], view=self)
 
     async def next_button_callback(self, interaction: discord.Interaction):
-        if interaction.user != self.ctx.author and self.AllowExtInput:
+        if interaction.user.id != self.ctx.author.id:
             embed = discord.Embed(description=f"**{interaction.user.global_name},** this is not your view!",
                                   color=discord.Colour.dark_embed())
             embed.set_footer(text=f"Markination - 2023")
@@ -111,7 +107,7 @@ class Simple(discord.ui.View):
         await interaction.response.defer()
 
     async def previous_button_callback(self, interaction: discord.Interaction):
-        if interaction.user != self.ctx.author and self.AllowExtInput:
+        if interaction.user.id != self.ctx.author.id:
             embed = discord.Embed(description=f"**{interaction.user.global_name},** this is not your view!",
                                   color=discord.Colour.dark_embed())
             embed.set_footer(text=f"Markination - 2023")
@@ -120,12 +116,22 @@ class Simple(discord.ui.View):
         await interaction.response.defer()
         
     async def start_button_callback(self, interaction: discord.Interaction):
+        if interaction.user.id != self.ctx.author.id:
+            embed = discord.Embed(description=f"**{interaction.user.global_name},** this is not your view!",
+                                  color=discord.Colour.dark_embed())
+            embed.set_footer(text=f"Markination - 2023")
+            return await interaction.response.send_message(embed=embed, ephemeral=True)
         self.current_page = 0
         self.page_counter.label = f"{self.current_page + 1}/{self.total_page_count}"
         await self.message.edit(embed=self.pages[self.current_page], view=self)
         await interaction.response.defer()
 
     async def end_button_callback(self, interaction: discord.Interaction):
+        if interaction.user.id != self.ctx.author.id:
+            embed = discord.Embed(description=f"**{interaction.user.global_name},** this is not your view!",
+                                  color=discord.Colour.dark_embed())
+            embed.set_footer(text=f"Markination - 2023")
+            return await interaction.response.send_message(embed=embed, ephemeral=True)
         self.current_page = self.total_page_count - 1
         self.page_counter.label = f"{self.current_page + 1}/{self.total_page_count}"
         await self.message.edit(embed=self.pages[self.current_page], view=self)
