@@ -14,7 +14,7 @@ Markination is a versatile Python package that provides an easy-to-use Discord m
 
 ## Installation
 
-![alt text]([http://url/to/img.png](https://media.discordapp.net/attachments/1093865249645547570/1147899684996780112/LibraryRequiresDiscordpy.png))
+[![]([http://url/to/img.png](https://media.discordapp.net/attachments/1093865249645547570/1147899684996780112/LibraryRequiresDiscordpy.png))
 
 
 You can install Markination using [Poetry](https://python-poetry.org/) and [PyPi](https://pypi.org/project/markination/)
