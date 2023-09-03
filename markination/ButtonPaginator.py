@@ -6,7 +6,7 @@ from discord.ext import commands
 
 class Simple(discord.ui.View):
     """
-    Embed Paginator.
+    Button Paginator.
 
     Parameters:
     ----------
