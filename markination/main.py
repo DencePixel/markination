@@ -22,6 +22,7 @@ class Simple(discord.ui.View):
         Page to start the pagination on.
     AllowExtInput: bool
         Overrides ability for 3rd party to interract with button.
+        welcome
     """
 
     def __init__(self, *,
