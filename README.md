@@ -90,8 +90,8 @@ async def dropdown(ctx):
         discord.Embed(title="Page 3", description="This is the third page.")
     ]
 
-    dropdown = Dropdown(ctx, pages, timeout=60)
-    await DropdownPaginator.Simple().start(ctx)
+    dropdown = DropdownPaginator.Simple(ctx, pages, timeout=60)
+    await DropdownPaginator.Simple(ctx, pages, timeout=60).start(ctx)
 
 ```
 Pull Requests are always open!
