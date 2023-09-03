@@ -1,0 +1,3 @@
+# Exclude build artifacts
+dist/
+*.egg-info/
