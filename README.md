@@ -24,4 +24,20 @@ poetry add markination
 pip install markination
 ```
 
+## Usage
+
+```python
+from markination import main
+from discord.ext import commands
+import discord
+
+@bot.command()
+async def paginator(ctx: commands.Context)
+    # A list of embeds to paginate
+    embeds = [discord.Embed(title="First embed"),         
+            discord.Embed(title="Second embed"),
+            discord.Embed(title="Third embed")]
+    # Start the paginator
+    await main.Simple().start(ctx, pages=embeds)
+
 
