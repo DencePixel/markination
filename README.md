@@ -26,6 +26,7 @@ pip install markination
 
 ## Usage
 
+Simple Setup:
 ```python
 from markination import main
 from discord.ext import commands
