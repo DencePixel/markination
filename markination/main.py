@@ -16,29 +16,38 @@ class Simple(discord.ui.View):
         Overrides default previous button.
     NextButton: discord.ui.Button
         Overrides default next button.
+    FirstEmbedButton: discord.ui.Button  # Corrected the class name here
+        Overrides default first page button.
+    LastEmbedButton: discord.ui.Button  # Corrected the class name here
+        Overrides default last page button.
     PageCounterStyle: discord.ButtonStyle
         Overrides default page counter style.
     InitialPage: int
         Page to start the pagination on.
     AllowExtInput: bool
-        Overrides ability for 3rd party to interract with button.
-        welcome
+        Overrides the ability for 3rd party to interact with button.
+    ephemeral: bool
+        Whether to send messages with this view as ephemeral (only visible to the original author).
     """
 
     def __init__(self, *,
                  timeout: int = 60,
-                 PreviousButton: discord.ui.Button = discord.ui.Button(emoji=discord.PartialEmoji(name="\U000025c0")),
-                 NextButton: discord.ui.Button = discord.ui.Button(emoji=discord.PartialEmoji(name="\U000025b6")),
+                 PreviousButton: discord.ui.Button = discord.ui.Button(emoji="⏪"),
+                 NextButton: discord.ui.Button = discord.ui.Button(emoji="⏩"),
+                 FirstEmbedButton: discord.ui.Button = discord.ui.Button(emoji="⏮"),
+                 LastEmbedButton: discord.ui.Button = discord.ui.Button(emoji="⏯"),
                  PageCounterStyle: discord.ButtonStyle = discord.ButtonStyle.grey,
                  InitialPage: int = 0, AllowExtInput: bool = False,
                  ephemeral: bool = False) -> None:
         self.PreviousButton = PreviousButton
+        self.FirstEmbedButton = FirstEmbedButton
+        self.LastEmbedButton = LastEmbedButton
         self.NextButton = NextButton
         self.PageCounterStyle = PageCounterStyle
         self.InitialPage = InitialPage
         self.AllowExtInput = AllowExtInput
         self.ephemeral = ephemeral
-        
+
         self.pages = None
         self.ctx = None
         self.message = None
@@ -49,7 +58,6 @@ class Simple(discord.ui.View):
         super().__init__(timeout=timeout)
 
     async def start(self, ctx: discord.Interaction|commands.Context, pages: list[discord.Embed]):
-        
         if isinstance(ctx, discord.Interaction):
             ctx = await commands.Context.from_interaction(ctx)
 
@@ -60,6 +68,8 @@ class Simple(discord.ui.View):
 
         self.PreviousButton.callback = self.previous_button_callback
         self.NextButton.callback = self.next_button_callback
+        self.FirstEmbedButton.callback = self.start_button_callback  # Added callback for the start button
+        self.LastEmbedButton.callback = self.end_button_callback  # Added callback for the end button
 
         self.page_counter = SimplePaginatorPageCounter(style=self.PageCounterStyle,
                                                        TotalPages=self.total_page_count,
@@ -68,6 +78,8 @@ class Simple(discord.ui.View):
         self.add_item(self.PreviousButton)
         self.add_item(self.page_counter)
         self.add_item(self.NextButton)
+        self.add_item(self.FirstEmbedButton)  # Added the start button to the view
+        self.add_item(self.LastEmbedButton)  # Added the end button to the view
 
         self.message = await ctx.send(embed=self.pages[self.InitialPage], view=self, ephemeral=self.ephemeral)
 
@@ -106,6 +118,19 @@ class Simple(discord.ui.View):
             return await interaction.response.send_message(embed=embed, ephemeral=True)
         await self.previous()
         await interaction.response.defer()
+        
+    async def start_button_callback(self, interaction: discord.Interaction):
+        self.current_page = 0
+        self.page_counter.label = f"{self.current_page + 1}/{self.total_page_count}"
+        await self.message.edit(embed=self.pages[self.current_page], view=self)
+        await interaction.response.defer()
+
+    async def end_button_callback(self, interaction: discord.Interaction):
+        self.current_page = self.total_page_count - 1
+        self.page_counter.label = f"{self.current_page + 1}/{self.total_page_count}"
+        await self.message.edit(embed=self.pages[self.current_page], view=self)
+        await interaction.response.defer()
+        
 
 
 
