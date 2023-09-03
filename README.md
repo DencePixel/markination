@@ -6,8 +6,8 @@ Markination is a versatile Python package that provides an easy-to-use Discord m
 
 ## Features
 
-- Paginate long Discord messages, embeds, or any content easily.
-- Highly customizable with support for custom buttons, styles, and more.
+- Discord Button Paginator
+- Discord Dropdown Paginator
 - Built-in support for navigation buttons (Next, Previous, First, Last).
 - Designed for ease of use in your Discord bot projects.
 - Extensible and open-source.
