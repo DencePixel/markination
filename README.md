@@ -18,9 +18,10 @@ You can install Markination using [Poetry](https://python-poetry.org/) and [PyPi
 
 ```shell
 poetry add markination
+```
 
 ```python
 pip install markination
-
+```
 
 
