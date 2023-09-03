@@ -93,7 +93,7 @@ class Simple(discord.ui.View):
         if interaction.user != self.ctx.author and self.AllowExtInput:
             embed = discord.Embed(description=f"**{interaction.user.global_name},** this is not your view!",
                                   color=discord.Colour.dark_embed())
-            embed.set_footer(text=f"Markination")
+            embed.set_footer(text=f"Markination - 2023")
             return await interaction.response.send_message(embed=embed, ephemeral=True)
         await self.next()
         await interaction.response.defer()
@@ -102,7 +102,7 @@ class Simple(discord.ui.View):
         if interaction.user != self.ctx.author and self.AllowExtInput:
             embed = discord.Embed(description=f"**{interaction.user.global_name},** this is not your view!",
                                   color=discord.Colour.dark_embed())
-            embed.set_footer(text=f"Markinator")
+            embed.set_footer(text=f"Markination - 2023")
             return await interaction.response.send_message(embed=embed, ephemeral=True)
         await self.previous()
         await interaction.response.defer()
