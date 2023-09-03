@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "markination"
+version = "0.1.0"
+description = "A discord paginator."
+authors = ["Mark <mark@blerp.co.uk>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+requests = "^2.26.0"
+numpy = "^1.22.0"
+discord = "^2"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
