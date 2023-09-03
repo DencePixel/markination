@@ -52,18 +52,23 @@ from discord import ui
 
 @bot.command()
 async def paginator(ctx: commands.Context):
+async def paginator(ctx: commands.Context):
     embeds = [discord.Embed(title="First embed"),         
             discord.Embed(title="Second embed"),
             discord.Embed(title="Third embed")]
-    PreviousButton = discord.ui.Button(...)
-    NextButton = discord.ui.Button(...)
-    PageCounterStyle = discord.ButtonStyle(...) # Only accepts ButtonStyle instead of Button
+    PreviousButton = discord.ui.Button(label=f"Previous")
+    NextButton = discord.ui.Button(label=f"Next")
+    FirstPageButton = discord.ui.Button(label=f"First Page")
+    LastPageButton = discord.ui.Button(label=f"Last page")
+    PageCounterStyle = discord.ButtonStyle.danger # Only accepts ButtonStyle instead of Button
     InitialPage = 0 # Page to start the paginator on.
     timeout = 0 # Seconds to timeout. Default is 60
     ephemeral = bool # Defaults to false if not passed in.
-    await Paginator.Simple(
+    await main.Simple(
         PreviousButton=PreviousButton,
         NextButton=NextButton,
+        FirstEmbedButton=FirstPageButton,
+        LastEmbedButton=LastPageButton,
         PageCounterStyle=PageCounterStyle,
         InitialPage=InitialPage,
         timeout=timeout, ephemeral=ephemeral).start(ctx, pages=embeds)
