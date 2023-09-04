@@ -90,7 +90,6 @@ async def dropdown(ctx):
         discord.Embed(title="Page 3", description="This is the third page.")
     ]
 
-    dropdown = DropdownPaginator.Simple(ctx, pages, timeout=60)
     await DropdownPaginator.Simple(ctx, pages, timeout=60).start(ctx)
 
 ```
