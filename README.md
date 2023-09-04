@@ -90,7 +90,25 @@ async def dropdown(ctx):
         discord.Embed(title="Page 3", description="This is the third page.")
     ]
 
-    await DropdownPaginator.Simple(ctx, pages, timeout=60).start(ctx)
+    await DropdownPaginator.Simple(ctx, pages, timeout=60, custom_error_embed=None).start(ctx)
 
+```
+
+Simple Dropdown With Custom Error Embed
+```python
+from markination import DropdownPaginator
+from discord.ext import commands
+import discord
+from discord import ui
+
+@bot.command()
+async def dropdown(ctx):
+    pages = [
+        discord.Embed(title="Page 1", description="This is the first page."),
+        discord.Embed(title="Page 2", description="This is the second page."),
+        discord.Embed(title="Page 3", description="This is the third page.")
+    ]
+    custom_error_Embed = discord.Embed(title=f"My custom embed that sends when a random person uses my view!")
+    await Simple(ctx, pages, timeout=60, custom_error_embed=custom_error_Embed).start(ctx)
 ```
 Pull Requests are always open!
