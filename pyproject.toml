@@ -10,6 +10,7 @@ python = "^3.11"
 requests = "^2.26.0"
 numpy = "^1.22.0"
 discord = "^2"
+asyncio = "3.4.3"
 
 [build-system]
 requires = ["poetry-core"]
