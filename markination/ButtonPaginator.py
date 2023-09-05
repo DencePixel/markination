@@ -1,7 +1,9 @@
 from __future__ import annotations
 
 import discord
+import asyncio
 from discord.ext import commands
+
 
 
 class Simple(discord.ui.View):
@@ -53,6 +55,12 @@ class Simple(discord.ui.View):
         self.total_page_count = None
 
         super().__init__(timeout=timeout)
+        
+    async def on_timeout(self):
+        embed = discord.Embed(title=f"Timed out!", description=f"I have timed out!", color=discord.Color.dark_embed())
+        embed.set_author(icon_url=self.ctx.author.display_avatar.url, name=self.ctx.author.display_name, url="https://github.com/DencePixel/markination")
+        await self.message.edit(view=None, content=None, embed=embed)
+    
 
     async def start(self, ctx: discord.Interaction|commands.Context, pages: list[discord.Embed]):
         if isinstance(ctx, discord.Interaction):
@@ -93,6 +101,8 @@ class Simple(discord.ui.View):
             self.current_page = 0
         else:
             self.current_page += 1
+        
+            
 
         self.page_counter.label = f"{self.current_page + 1}/{self.total_page_count}"
         await self.message.edit(embed=self.pages[self.current_page], view=self)
@@ -136,7 +146,7 @@ class Simple(discord.ui.View):
         self.page_counter.label = f"{self.current_page + 1}/{self.total_page_count}"
         await self.message.edit(embed=self.pages[self.current_page], view=self)
         await interaction.response.defer()
-        
+
 
 
 
