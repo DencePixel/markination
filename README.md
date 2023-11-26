@@ -1,7 +1,6 @@
 # Markination
 
-[![License](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
-
+Creative Commons NonCommercial license
 Markination is a versatile Python package that provides an easy-to-use Discord message paginator using the discord.py library.
 
 ## Features
